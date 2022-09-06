@@ -5,8 +5,8 @@
   - Добавлена загрузка GUI;
   - За основу взят дистрибутив Centos 7.
 * __Способ 1__. init=/bin/
-  - В параметры загрузки добавлен параметр __ init=/bin/sh__ (стерты все параметры до монтирования);
-  - Проверена возможность записи файлов в директорию __/bome/vagrant/__:
+  - В параметры загрузки добавлен параметр __init=/bin/sh__ (стерты все параметры до монтирования);
+  - Проверена возможность записи файлов в директорию __/home/vagrant/__:
 ```console
 sh-4.2# touch /home/vagrant/test && echo "test" > /home/vagrant/test
 touch: cannot touch '/home/vagrant/test': Read-only file system
@@ -34,5 +34,16 @@ passwd: all authentification tokens updated successfully.
 sh-4.2# touch /.autorelabel
 sh-4.2#
 ```
+  - ВМ перезагружена, зашел в терминал под пользьвателем __root__, пароль __changeme__.
 
+* __Способ 3. rw init=/sysroot/bin/sh
+  - В параметры загрузки добавлен параметр __rw init=/sysroot/bin/sh__;
+  - Система загружена сразу в режиме __rw__:
+ sh-4.2# touch /home/vagrant/test2 && echo "test2" > /home/vagrant/test
+sh-4.2# cat /home/vagrant/test2
+test2
+sh-4.2#
+```
+#### 2. Смонтировать систему в LVM, после чего переименовать в VG.
+* 
 
