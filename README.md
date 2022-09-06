@@ -109,6 +109,12 @@ total 8
 *** Creating initramfs image file '/boot/initramfs-3.10.0-1127.el7.x86_64.img' done ***
 [root@localhost 01test]# 
 ```
-* Проверил загрузку модуля 
+* Проверил загрузку модуля __test__:
+```console
+[root@localhost 01test]# lsinitrd -m /boot/initramfs-$(uname -r).img | grep test
+test
+[root@localhost 01test]# 
+```
+* Перезапустил ОС, удалил из GRUB лишние параметры, пингвин на месте!
 
 
