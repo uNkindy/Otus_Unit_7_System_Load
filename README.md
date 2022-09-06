@@ -75,4 +75,40 @@ Volume group "VolGroup00" successfully renamed to "NewVolGroup00"
  ```
 ___
 #### 3. Добавление модуля в initrd
-* 
+* Создал папку в __/usr/lib/drakut/module.d/01test__
+* Добавил 2 скрипта __test.sh, module-setup.sh__ и сделал данный скрипты исполняемыми:
+```console
+[root@localhost 01test]# chmod +x test.sh
+[root@localhost 01test]# chmod +x module-setup.sh
+[root@localhost 01test]# ls -l /usr/lib/dracut/modules.d/01test/
+total 8
+-rwxr-xr-x. 1 root root 126 Sep  6 15:44 module-setup.sh
+-rwxr-xr-x. 1 root root 333 Sep  6 16:42 test.sh
+[root@localhost 01test]# 
+```
+* Пересобрал образ initrd
+```console
+[root@localhost 01test]# mkinitrd -f -v /boot/initramfs-$(uname -r).img $(uname -r)
+.
+.
+.
+*** Store current command line parameters ***
+*** Creating image file ***
+*** Creating image file done ***
+*** Creating initramfs image file '/boot/initramfs-3.10.0-1127.el7.x86_64.img' done ***
+[root@localhost 01test]# 
+```
+```console 
+[root@localhost 01test]# dracut -f -v
+.
+.
+.
+*** Store current command line parameters ***
+*** Creating image file ***
+*** Creating image file done ***
+*** Creating initramfs image file '/boot/initramfs-3.10.0-1127.el7.x86_64.img' done ***
+[root@localhost 01test]# 
+```
+* Проверил загрузку модуля 
+
+
