@@ -24,5 +24,15 @@ sh-4.2#
   - Перемонтируем корневую систему в __rw__ и меняем пароль __root__:
 ```console
 switch_root:/# mount -o remount, rw /sysroot
-switch_root:/# 
+switch_root:/# chroot /sysroot
+switch_root:/# passwd root
+Changing password for user root.
+New password:
+BAD PASSWORD: The password fails the dictionary check - it is based on a dictionary word
+Retype new password:
+passwd: all authentification tokens updated successfully.
+sh-4.2# touch /.autorelabel
+sh-4.2#
+```
+
 
