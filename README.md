@@ -49,25 +49,33 @@ sh-4.2#
 ___
 __Разница между методами получения shell:__ 
 #### 2. Смонтировать систему в LVM, после чего переименовать в VG.
-* В дистрибутив установлен пакет __lvm2__;
-* Созданы physical volume на /dev/sdb, volume group __VolGroup00__ и logical volume __test__;\
+* Перемонтируем систему в rw, переименуем Volume Group в NewVolGroup00
 ```console
 [root@localhost vagrant]# vgs
-  VG         #PV #LV #SN Attr   VSize    VFree
-  VolGroup00   1   1   0 wz--n- 1020.00m    0 
-[root@localhost vagrant]#
-```
-```console
-[root@localhost vagrant]# lvs
-  LV   VG         Attr       LSize    Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
-  test VolGroup00 -wi-ao---- 1020.00m                                                    
-[root@localhost vagrant]# 
-```
-* Раздел LVM test примонтирован в __/mnt/test__, автомонтирование прописано __fstab__;
-* Переименуем volume group:
-```console
+  VG         #PV #LV #SN Attr   VSize   VFree
+  VolGroup00   1   2   0 wz--n- <38.97g    0 
 [root@localhost vagrant]# vgrename VolGroup00 NewVolGroup00
-  Volume group "VolGroup00" successfully renamed to "NewVolGroup00"
-[root@localhost vagrant]# 
+Cannot archive volume group metadata for VolGroup00 to read-only filesystem.
+[root@localhost vagrant]# mount -o remount,rw /         
+[root@localhost vagrant]# vgrename VolGroup00 NewVolGroup00
+Volume group "VolGroup00" successfully renamed to "NewVolGroup00"
 ```
+* Изменим название VG в [/etc/fstab](), [/etc/default/grub](), [/boot/grub2/grub.cfg]();
+* Создадим __initrd__, ребутнемся и проверим имя volume group
+```console
+[root@localhost vagrant]# mkinitrd -f -v /boot/initramfs-$(uname -r).img $(uname -r)
+ *** Creating image file ***
+ *** Creating image file done ***
+ *** Creating initramfs image file '/boot/initramfs-3.10.0-862.2.3.el7.x86_64.img' done ***
+ [root@localhost vagrant]# reboot
+ ```
+ ```console
+ [root@localhost vagrant]# vgs
+ VG             #PV #LV #SN Attr   VSize   VFree
+ NewVolGroup00   1   2   0 wz--n- <38.97g    0 
+ ```
 
+
+___
+#### 3. Добавление модуля в initrd
+* 
