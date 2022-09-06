@@ -59,7 +59,7 @@ Cannot archive volume group metadata for VolGroup00 to read-only filesystem.
 [root@localhost vagrant]# vgrename VolGroup00 NewVolGroup00
 Volume group "VolGroup00" successfully renamed to "NewVolGroup00"
 ```
-* Изменим название VG в [/etc/fstab](https://github.com/uNkindy/Otus_Unit_7_System_Load/blob/main/fstab), [/etc/default/grub](), [/boot/grub2/grub.cfg]();
+* Изменим название VG в [/etc/fstab](https://github.com/uNkindy/Otus_Unit_7_System_Load/blob/main/fstab), [/etc/default/grub](https://github.com/uNkindy/Otus_Unit_7_System_Load/blob/main/grub), [/boot/grub2/grub.cfg]();
 * Создадим __initrd__, ребутнемся и проверим имя volume group
 ```console
 [root@localhost vagrant]# mkinitrd -f -v /boot/initramfs-$(uname -r).img $(uname -r)
